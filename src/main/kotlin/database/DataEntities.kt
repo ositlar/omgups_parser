@@ -1,5 +1,6 @@
 package database
 
+import database.DBDataTable.bindTo
 import org.ktorm.entity.Entity
 import org.ktorm.schema.Column
 import org.ktorm.schema.Table
@@ -15,7 +16,7 @@ object DBDataTable: Table<DBDataEntity>("new_table") {
     val type_of_week = int("type_of_week").bindTo { it.type_of_week }
     val day_of_week = varchar("day_of_week").bindTo { it.day_of_week }
     val time = int("time").bindTo { it.time }
-
+    val classroom = varchar("classroom").bindTo { it.classroom }
 
 }
 
@@ -29,5 +30,5 @@ interface DBDataEntity: Entity<DBDataEntity> {
     val type_of_week: Int
     val day_of_week: String
     val time: Int
-
+    val classroom: String
 }

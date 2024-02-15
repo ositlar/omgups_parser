@@ -2,7 +2,7 @@
 @file:Suppress("CAST_NEVER_SUCCEEDS")
 
 import entities.DataDraft
-import parser.readFromExcelFile
+import parser.excel.readFromExcelFile
 import repository.DataRepository
 import repository.SQLDataRepository
 
@@ -35,7 +35,8 @@ fun main(args: Array<String>) {
                                 subj_name = lesson.name,
                                 type_of_week = 0,
                                 day_of_week = day.dayOfWeek,
-                                time = lesson.time
+                                time = lesson.time,
+                                classroom = lesson.classRoom
                             )
                         )
                     }
@@ -51,7 +52,8 @@ fun main(args: Array<String>) {
                                 subj_name = lesson.name,
                                 type_of_week = 1,
                                 day_of_week = day.dayOfWeek,
-                                time = lesson.time
+                                time = lesson.time,
+                                classroom = lesson.classRoom
                             )
                         )
 

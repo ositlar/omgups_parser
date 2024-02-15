@@ -1,4 +1,4 @@
-package parser
+package parser.excel
 
 import classes.Day
 import classes.Lesson

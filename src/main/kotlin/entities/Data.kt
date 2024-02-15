@@ -7,5 +7,6 @@ data class Data (
     var subj_name: String,
     var type_of_week: Int,
     var day_of_week: String,
-    var time: Int
+    var time: Int,
+    var classroom: String
 )

@@ -47,6 +47,7 @@ class DatabaseManager {
             set(DBDataTable.type_of_week, draft.type_of_week)
             set(DBDataTable.day_of_week, draft.day_of_week)
             set(DBDataTable.time, draft.time)
+            set(DBDataTable.classroom, draft.classroom)
         } as Int
         return insertedID > 0
     }
@@ -59,6 +60,7 @@ class DatabaseManager {
             set(DBDataTable.type_of_week, draft.type_of_week)
             set(DBDataTable.day_of_week, draft.day_of_week)
             set(DBDataTable.time, draft.time)
+            set(DBDataTable.classroom, draft.classroom)
             where { it.id eq id }
         }
         return updatedRows > 0

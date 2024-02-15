@@ -15,19 +15,20 @@ class SQLDataRepository : DataRepository {
                 it.subj_name,
                 it.type_of_week,
                 it.day_of_week,
-                it.time)
+                it.time,
+                it.classroom)
         }
     }
 
     override fun getData(id: Int): Data? {
         return database.getData(id) ?. let {
-            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time)
+            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time, it.classroom)
         }
     }
 
     fun getData(fullname: String): Data? {
         return database.getData(fullname) ?. let {
-            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time)
+            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time, it.classroom)
         }
     }
 
