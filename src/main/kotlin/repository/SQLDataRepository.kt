@@ -3,36 +3,31 @@ package repository
 import database.DatabaseManager
 import entities.Data
 import entities.DataDraft
+import entities.DataDraftHTML
+import entities.DataHTML
 
 class SQLDataRepository : DataRepository {
 
     private val database = DatabaseManager()
-    override fun getAllData(): List<Data> {
+    override fun getAllData(): List<DataHTML> {
         return database.getAllData().map {
-            Data(it.id,
-                it.teacher,
+            DataHTML(it.id,
                 it.group,
                 it.subj_name,
                 it.type_of_week,
                 it.day_of_week,
-                it.time,
-                it.classroom)
+                it.time)
         }
     }
 
-    override fun getData(id: Int): Data? {
+    override fun getData(id: Int): DataHTML? {
         return database.getData(id) ?. let {
-            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time, it.classroom)
+            DataHTML(it.id, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time)
         }
     }
 
-    fun getData(fullname: String): Data? {
-        return database.getData(fullname) ?. let {
-            Data(it.id, it.teacher, it.group, it.subj_name, it.type_of_week, it.day_of_week, it.time, it.classroom)
-        }
-    }
 
-    override fun addData(draft: DataDraft): Boolean {
+    override fun addData(draft: DataDraftHTML): Boolean {
         return database.addData(draft)
     }
 
@@ -44,8 +39,8 @@ class SQLDataRepository : DataRepository {
         return database.removeAllData()
     }
 
-    override fun updateData(id: Int, draft: DataDraft): Boolean {
-        return database.updateData(id, draft)
+    override fun updateData(id: Int, draft: DataDraftHTML): Boolean {
+        TODO("Not yet implemented")
     }
 
 }

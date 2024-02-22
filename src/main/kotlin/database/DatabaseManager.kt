@@ -2,6 +2,7 @@ package database
 
 import entities.Data
 import entities.DataDraft
+import entities.DataDraftHTML
 import org.ktorm.database.Database
 import org.ktorm.dsl.*
 import org.ktorm.entity.firstOrNull
@@ -27,54 +28,53 @@ class DatabaseManager {
         ktormDatabase = Database.connect(jdbcUrl)
     }
 
-    fun getAllData(): List<DBDataEntity> {
-        return ktormDatabase.sequenceOf(DBDataTable).toList()
+    fun getAllData(): List<DBDataEntityHTML> {
+        return ktormDatabase.sequenceOf(DBDataTableHTML).toList()
     }
 
-    fun getData(id: Int): DBDataEntity? {
-        return ktormDatabase.sequenceOf(DBDataTable).firstOrNull { it.id eq id }
+    fun getData(id: Int): DBDataEntityHTML? {
+        return ktormDatabase.sequenceOf(DBDataTableHTML).firstOrNull { it.id eq id }
     }
 
-    fun getData(fullname: String): DBDataEntity? {
-        return ktormDatabase.sequenceOf(DBDataTable).firstOrNull { it.teacher eq fullname }
-    }
+    fun addData(draft: DataDraftHTML): Boolean {
+        var insertedID: Int = 0
+        try {
+             insertedID = ktormDatabase.insertAndGenerateKey(DBDataTableHTML) {
+                set(DBDataTableHTML.group, draft.group)
+                set(DBDataTableHTML.subj, draft.subj)
+                set(DBDataTableHTML.type_of_week, draft.type_of_week)
+                set(DBDataTableHTML.day_of_week, draft.day_of_week)
+                set(DBDataTableHTML.time, draft.time)
+            } as Int
 
-    fun addData(draft: DataDraft): Boolean {
-        val insertedID = ktormDatabase.insertAndGenerateKey(DBDataTable) {
-            set(DBDataTable.teacher, draft.teacher)
-            set(DBDataTable.group, draft.group)
-            set(DBDataTable.subj_name, draft.subj_name)
-            set(DBDataTable.type_of_week, draft.type_of_week)
-            set(DBDataTable.day_of_week, draft.day_of_week)
-            set(DBDataTable.time, draft.time)
-            set(DBDataTable.classroom, draft.classroom)
-        } as Int
+        } catch (e: Exception) {
+            println(draft)
+            throw e
+        }
         return insertedID > 0
     }
 
-    fun updateData(id: Int, draft: DataDraft): Boolean {
-        val updatedRows = ktormDatabase.update(DBDataTable) {
-            set(DBDataTable.teacher, draft.teacher)
-            set(DBDataTable.group, draft.group)
-            set(DBDataTable.subj_name, draft.subj_name)
-            set(DBDataTable.type_of_week, draft.type_of_week)
-            set(DBDataTable.day_of_week, draft.day_of_week)
-            set(DBDataTable.time, draft.time)
-            set(DBDataTable.classroom, draft.classroom)
+    fun updateData(id: Int, draft: DataDraftHTML): Boolean {
+        val updatedRows = ktormDatabase.update(DBDataTableHTML) {
+            set(DBDataTableHTML.group, draft.group)
+            set(DBDataTableHTML.subj, draft.subj)
+            set(DBDataTableHTML.type_of_week, draft.type_of_week)
+            set(DBDataTableHTML.day_of_week, draft.day_of_week)
+            set(DBDataTableHTML.time, draft.time)
             where { it.id eq id }
         }
         return updatedRows > 0
     }
 
     fun removeData(id: Int): Boolean {
-        val deletedRows = ktormDatabase.delete(DBDataTable) {
+        val deletedRows = ktormDatabase.delete(DBDataTableHTML) {
             it.id eq id
         }
         return deletedRows > 0
     }
 
     fun removeAllData(): Boolean {
-        val deletedRows = ktormDatabase.deleteAll(DBDataTable)
+        val deletedRows = ktormDatabase.deleteAll(DBDataTableHTML)
         return deletedRows > 0
     }
 
